@@ -4,7 +4,7 @@ sequenceDiagram
     participant browser
     participant server
 
-    user ->> browser: Enter url
+    user ->> browser: Enters url
     
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
     activate server

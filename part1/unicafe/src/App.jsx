@@ -2,10 +2,13 @@ import { useState } from 'react'
 import './App.css'
 
 const App = () => {
-  // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+
+  let total = bad + neutral + good
+  let average = ((bad * -1 + neutral * 0 + good * 1) / total) || 0
+  let positivePercentage = ((good / total) * 100) || 0
 
   const handleGoodClick = () => {
     setGood(good + 1)
@@ -17,7 +20,7 @@ const App = () => {
 
   const handleBadClick = () => {
     setBad(bad + 1)
-  } 
+  }
 
   return (
     <div>
@@ -32,6 +35,9 @@ const App = () => {
         <div>good: {good}</div>
         <div>neutral: {neutral}</div>
         <div>bad: {bad}</div>
+        <div>all: {total}</div>
+        <div>average: {average}</div>
+        <div>positive: {positivePercentage} %</div>
       </div>
     </div>
   )

@@ -3,6 +3,14 @@ import './App.css'
 
 
 const Statistics = ({clicks, stats}) => {
+  if (clicks.good + clicks.bad + clicks.neutral === 0) {
+    return (
+      <>
+      <h1 className="title">Statistics</h1>
+      <div>No feedback given</div>
+      </>
+    )
+  }
   return (
     <>
       <h1 className="title">Statistics</h1>

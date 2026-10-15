@@ -11,9 +11,11 @@ const Button = ({clickType, text}) => {
 }
 
 const StatisticsLine = ({text, value}) => {
-  return (
-    <div>{text}: {value}</div>
-  )
+  if (text === "positive") {
+       return <div>{text}: {value} %</div>
+    }
+
+  return <div>{text}: {value}</div>
 }
 
 const Statistics = ({clicks, stats}) => {

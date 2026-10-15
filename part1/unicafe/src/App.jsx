@@ -2,6 +2,20 @@ import { useState } from 'react'
 import './App.css'
 
 
+const Button = ({clickType, text}) => {
+  return (
+    <div className="button-container">
+        <button onClick={clickType}>{text}</button>
+    </div>
+  )
+}
+
+const StatisticsLine = ({text, value}) => {
+  return (
+    <div>{text}: {value}</div>
+  )
+}
+
 const Statistics = ({clicks, stats}) => {
   if (clicks.good + clicks.bad + clicks.neutral === 0) {
     return (
@@ -15,12 +29,12 @@ const Statistics = ({clicks, stats}) => {
     <>
       <h1 className="title">Statistics</h1>
       <div>
-        <div>good: {clicks.good}</div>
-        <div>neutral: {clicks.neutral}</div>
-        <div>bad: {clicks.bad}</div>
-        <div>all: {stats.total}</div>
-        <div>average: {stats.average}</div>
-        <div>positive: {stats.positivePercentage} %</div>
+        <StatisticsLine text="good" value={clicks.good}></StatisticsLine>
+        <StatisticsLine text="neutral" value={clicks.neutral}></StatisticsLine>
+        <StatisticsLine text="bad" value={clicks.bad}></StatisticsLine>
+        <StatisticsLine text="all" value={stats.total}></StatisticsLine>
+        <StatisticsLine text="average" value={stats.average}></StatisticsLine>
+        <StatisticsLine text="positive" value={stats.positivePercentage}></StatisticsLine>
       </div>
     </>
   )
@@ -51,11 +65,11 @@ const App = () => {
     <div>
       <h1>Give Feedback</h1>
       <div className="button-container">
-        <button onClick={handleGoodClick}>good</button>
-        <button onClick={handleNeutralClick}>neutral</button>
-        <button onClick={handleBadClick}>bad</button>
+        <Button text="good" clickType={handleGoodClick}></Button>
+        <Button text="neutral" clickType={handleNeutralClick}></Button>
+        <Button text="bad" clickType={handleBadClick}></Button>
       </div>
-      <Statistics 
+      <Statistics
         clicks={{good:good, neutral:neutral, bad:bad}}
         stats={{total:total, average:average, positivePercentage:positivePercentage}}>
       </Statistics>

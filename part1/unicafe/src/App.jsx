@@ -12,10 +12,28 @@ const Button = ({clickType, text}) => {
 
 const StatisticsLine = ({text, value}) => {
   if (text === "positive") {
-       return <div>{text}: {value} %</div>
-    }
+    return (
+      <tr>
+        <td>
+          {text}
+        </td>
+        <td>
+          {value} %
+        </td>
+      </tr>
+    )
+  }
 
-  return <div>{text}: {value}</div>
+  return  (
+    <tr>
+        <td>
+          {text}
+        </td>
+        <td>
+          {value}
+        </td>
+    </tr>
+  )
 }
 
 const Statistics = ({clicks, stats}) => {
@@ -30,14 +48,16 @@ const Statistics = ({clicks, stats}) => {
   return (
     <>
       <h1 className="title">Statistics</h1>
-      <div>
-        <StatisticsLine text="good" value={clicks.good}></StatisticsLine>
-        <StatisticsLine text="neutral" value={clicks.neutral}></StatisticsLine>
-        <StatisticsLine text="bad" value={clicks.bad}></StatisticsLine>
-        <StatisticsLine text="all" value={stats.total}></StatisticsLine>
-        <StatisticsLine text="average" value={stats.average}></StatisticsLine>
-        <StatisticsLine text="positive" value={stats.positivePercentage}></StatisticsLine>
-      </div>
+        <table>
+          <tbody>
+            <StatisticsLine text="good" value={clicks.good}></StatisticsLine>
+            <StatisticsLine text="neutral" value={clicks.neutral}></StatisticsLine>
+            <StatisticsLine text="bad" value={clicks.bad}></StatisticsLine>
+            <StatisticsLine text="all" value={stats.total}></StatisticsLine>
+            <StatisticsLine text="average" value={stats.average}></StatisticsLine>
+            <StatisticsLine text="positive" value={stats.positivePercentage}></StatisticsLine>
+          </tbody>
+        </table>
     </>
   )
 }

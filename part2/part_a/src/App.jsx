@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 
 
@@ -21,12 +20,18 @@ const Header = ({courseName}) => (
   <h1>{courseName}</h1>
 )
 
-const Course = ({course}) => (
-<div>
-    <Header courseName={course.name}></Header>
-    <Content parts={course.parts}></Content>
-</div>
-)
+const Course = ({course}) => {
+  const total = course.parts.reduce(
+    ((sum, part) => sum + part.exercises), 0)
+
+  return (
+    <div className="course-container">
+      <Header courseName={course.name}></Header>
+      <Content parts={course.parts}></Content>
+      <div className="total">total of {total} exercises</div>
+    </div>
+  )
+}
 
 const App = () => {
   const course = {
@@ -47,6 +52,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      }, 
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }

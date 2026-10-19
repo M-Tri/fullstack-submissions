@@ -1,23 +1,32 @@
 import { useState } from 'react'
 import './App.css'
 
-const Header = (props) => <h1>{props.course}</h1>
 
-const Content = (props) => (
-  <div>
-    <Part part={props.parts[0]} />
-    <Part part={props.parts[1]} />
-    <Part part={props.parts[2]} />
-  </div>
+const Part = ({part}) => (
+  <li>
+    {part.name} {part.exercises}
+  </li>
 )
 
-const Part = (props) => (
-  <p>
-    {props.part.name} {props.part.exercises}
-  </p>
+const Content = ({parts}) => (
+  <ul className="content-list">
+    {parts.map(part => 
+      <Part key={part.id} part={part}></Part>
+      )
+    }
+  </ul>
 )
 
-const Total = (props) => <p>Number of exercises {props.total}</p>
+const Header = ({courseName}) => (
+  <h1>{courseName}</h1>
+)
+
+const Course = ({course}) => (
+<div>
+    <Header courseName={course.name}></Header>
+    <Content parts={course.parts}></Content>
+</div>
+)
 
 const App = () => {
   const course = {
@@ -42,7 +51,7 @@ const App = () => {
     ]
   }
 
-  return <Course course={course} />
+  return <Course course={course}/>
 }
 
 export default App

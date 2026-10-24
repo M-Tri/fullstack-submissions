@@ -42,13 +42,15 @@ const App = () => {
       alert(`${newName} or ${newNumber} is already added to phonebook`)
     }
     else {
-      const newPersonList = persons.concat(personObject)
-      setPersons(newPersonList)
-    }
-    setNewName('')
-    setNewNumber('')
+      axios.post('http://localhost:3001/persons', personObject).then((returnedPerson) => {
+        const newPersonList = persons.concat(returnedPerson.data)
+        setPersons(newPersonList)
+        setNewName('')
+        setNewNumber('')
+      })
+    } 
   }
-
+  
   const searchedPersons = persons.filter(person => person.name.toLowerCase().includes(searchSubString.toLowerCase()))
 
   return (

@@ -56,23 +56,43 @@ const App = () => {
 
   const searchedPersons = persons.filter(person => person.name.toLowerCase().includes(searchSubString.toLowerCase()))
 
+  const deletePersonOf = (id) => {
+    const personToDelete = persons.find(p => p.id === id)
+    if (window.confirm(`Delete ${personToDelete.name}?`)){
+      personService
+      .deletePerson(id)
+      .then((returnedPerson) => {
+        const newPersonList = persons.filter(person => person.id !== returnedPerson.id)
+        setPersons(newPersonList)
+      })
+      .catch((error) => {
+        alert(error.message)
+      })
+    } else {
+      console.log("no action will be taking")
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
 
-      <Filter value={searchSubString} onChange={handleSubString}></Filter>
+      <Filter value={searchSubString} onChange={handleSubString}/>
 
       <h3>Add a new</h3>
 
       <PersonForm 
         onSubmit={addInfo}
         nameValue={newName} nameOnChange={handleNameChange}
-        numberValue={newNumber} numberOnChange={handleNumberChange}>
-      </PersonForm>
+        numberValue={newNumber} numberOnChange={handleNumberChange}
+      />
 
       <h3>Numbers</h3>
 
-      <Persons searchResults={searchedPersons} ></Persons>
+      <Persons 
+        searchResults={searchedPersons} 
+        deletePersonof={deletePersonOf}
+      />
     </div>
   )
 }

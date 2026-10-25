@@ -36,12 +36,19 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    const isDublicateName = persons.some(person => person.name === personObject.name)
-    const isDublicateNumber = persons.some(person => person.number === personObject.number)
-
-    if (isDublicateName || isDublicateNumber){
-      alert(`${newName} or ${newNumber} is already added to phonebook`)
-    }
+    const dublicatePerson = persons.find(person => person.name === personObject.name)
+    if (dublicatePerson) {
+      if (window.confirm(`${dublicatePerson.name} is already added to phonebook, replace the old number with a new one?`)) {
+        personService
+        .updateNumber(dublicatePerson.id, personObject)
+        .then((updatedPerson) => {
+          const newPersonsList = persons.filter((p) => p.id !== dublicatePerson.id)
+          setPersons(newPersonsList.concat(updatedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+      }
+    } 
     else {
       personService
       .create(personObject)

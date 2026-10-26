@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchSubString, setSubString] = useState('')
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
   personService
@@ -46,18 +48,36 @@ const App = () => {
           setPersons(newPersonsList.concat(updatedPerson))
           setNewName('')
           setNewNumber('')
+          return updatedPerson
+        })
+        .then( updatedPerson => {
+          setSuccessMessage(
+            `Updated ${updatedPerson.name}`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 4000)
         })
       }
-    } 
+    }
     else {
       personService
       .create(personObject)
-      .then((returnedPerson) => {
-        const newPersonList = persons.concat(returnedPerson)
+      .then((addedPerson) => {
+        const newPersonList = persons.concat(addedPerson)
         setPersons(newPersonList)
         setNewName('')
         setNewNumber('')
+        return addedPerson
       })
+      .then( updatedPerson => {
+          setSuccessMessage(
+            `Added ${updatedPerson.name}`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 4000)
+        })
     } 
   }
 
@@ -83,8 +103,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
-      <Filter value={searchSubString} onChange={handleSubString}/>
+      <Notification message={successMessage} />
+      <Filter value={searchSubString} onChange={handleSubString} />
 
       <h3>Add a new</h3>
 

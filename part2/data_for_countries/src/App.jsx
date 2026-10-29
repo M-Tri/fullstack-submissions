@@ -28,7 +28,7 @@ const App = () => {
       
       <Search value={countrySearchValue} onChange={handleMatchingCountries} />
 
-      <Countries matchingCountries={matchingCountries} />
+      <Countries matchingCountries={matchingCountries} setMatchingCountries={setMatchingCountries} />
 
     </div>
   )

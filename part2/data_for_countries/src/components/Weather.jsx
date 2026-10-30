@@ -1,6 +1,6 @@
 const Weather = ({weather}) => {
     if (!weather) {
-        <div>Loading ...</div>
+        return <div>Loading ...</div>
     } else {
         const iconId = weather.weather[0].icon
         return (

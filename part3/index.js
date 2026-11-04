@@ -54,6 +54,46 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
+app.post('/api/persons', (request, response) => {
+  const randId = Math.floor(Math.random() * 100000)
+  const body = request.body
+  
+  if (!body) {
+    return response.status(400).json({ 
+      error: 'body undefined' 
+    })
+  }
+
+  if (!body.name) {
+    return response.status(400).json({ 
+      error: 'name missing' 
+    })
+  }
+
+  if (!body.number) {
+    return response.status(400).json({ 
+      error: 'number missing' 
+    })
+  }
+
+  const repeatedName = persons.some(p => p.name === body.name)
+  if (repeatedName) {
+    return response.status(400).json({ 
+      error: 'name must be unique' 
+    })
+  }
+
+  const person = {
+    id: body.id || String(randId),
+    name: body.name,
+    number: body.number,
+  }
+
+  persons = persons.concat(person)
+  
+  response.json(person)
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)

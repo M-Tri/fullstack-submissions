@@ -60,8 +60,9 @@ const App = () => {
             setSuccessMessage(null)
           }, 4000)
         })
-        .catch(() => {
-           setErrorMessage(
+        .catch((error) => {
+          console.log('delete failed:', error)
+          setErrorMessage(
           `Information of '${dublicatePerson.name}' has already been removed from server`
           )
           setTimeout(() => {
@@ -70,8 +71,7 @@ const App = () => {
           setPersons(persons.filter((p) => p.name !== dublicatePerson.name))
         })
       }
-    }
-    else {
+    } else {
       personService
       .create(personObject)
       .then((addedPerson) => {
@@ -99,12 +99,13 @@ const App = () => {
     if (window.confirm(`Delete ${personToDelete.name}?`)){
       personService
       .deletePerson(id)
-      .then((returnedPerson) => {
-        const newPersonList = persons.filter(person => person.id !== returnedPerson.id)
+      .then(() => {
+        const newPersonList = persons.filter(person => person.id !== id)
         setPersons(newPersonList)
       })
-      .catch(() => {
-           setErrorMessage(
+      .catch((error) => {
+          setErrorMessage(
+          console.log('delete failed:', error)
           `Information of '${personToDelete.name}' has already been removed from server`
           )
           setTimeout(() => {

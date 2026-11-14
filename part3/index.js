@@ -52,45 +52,44 @@ app.get('/api/persons/:id', (request, response) => {
 //   response.status(204).end()
 // })
 
-// app.post('/api/persons', (request, response) => {
-//   const randId = Math.floor(Math.random() * 100000)
-//   const body = request.body
+app.post('/api/persons', (request, response) => {
+  const body = request.body
   
-//   if (!body) {
-//     return response.status(400).json({ 
-//       error: 'body undefined' 
-//     })
-//   }
+  if (!body) {
+    return response.status(400).json({ 
+      error: 'body undefined' 
+    })
+  }
 
-//   if (!body.name) {
-//     return response.status(400).json({ 
-//       error: 'name missing' 
-//     })
-//   }
+  if (!body.name) {
+    return response.status(400).json({ 
+      error: 'name missing' 
+    })
+  }
 
-//   if (!body.number) {
-//     return response.status(400).json({ 
-//       error: 'number missing' 
-//     })
-//   }
+  if (!body.number) {
+    return response.status(400).json({ 
+      error: 'number missing' 
+    })
+  }
 
-//   const repeatedName = persons.some(p => p.name === body.name)
-//   if (repeatedName) {
-//     return response.status(400).json({ 
-//       error: 'name must be unique' 
-//     })
-//   }
+  //As indicated in the question, you can ignore this for now
+  // const repeatedName = persons.some(p => p.name === body.name)
+  // if (repeatedName) {
+  //   return response.status(400).json({ 
+  //     error: 'name must be unique' 
+  //   })
+  // }
 
-//   const person = new Person ({
-//     id: body.id || String(randId),
-//     name: body.name,
-//     number: body.number,
-//   })
+  const person = new Person ({
+    name: body.name,
+    number: body.number,
+  })
 
-//   persons = persons.concat(person)
-  
-//   response.json(person)
-// })
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
+})
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

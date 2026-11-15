@@ -36,7 +36,6 @@ app.get('/api/persons/:id', (request, response, next) => {
     if(person) {
       response.json(person)
     } else {
-      console.log("ID NOT FOUND")
       response.status(404).end()
     }
   })

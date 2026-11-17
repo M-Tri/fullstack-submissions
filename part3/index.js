@@ -76,6 +76,7 @@ app.put('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then((person) => {
       if (!person) {
+        console.log("Person was not found")
         return response.status(404).end()
       }
 

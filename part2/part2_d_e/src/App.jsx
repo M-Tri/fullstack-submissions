@@ -61,14 +61,11 @@ const App = () => {
           }, 4000)
         })
         .catch((error) => {
-          console.log('delete failed:', error)
-          setErrorMessage(
-          `Information of '${dublicatePerson.name}' has already been removed from server`
-          )
+          console.log("Error in update person object, in addInfo")
+          setErrorMessage(error.response.data.error)
           setTimeout(() => {
             setErrorMessage(null)
           }, 5000)
-          setPersons(persons.filter((p) => p.name !== dublicatePerson.name))
         })
       }
     } else {
@@ -81,21 +78,21 @@ const App = () => {
         setNewNumber('')
         return addedPerson
       })
-      .then((updatedPerson) => {
-          setSuccessMessage(
-            `Added ${updatedPerson.name}`
-          )
-          setTimeout(() => {
-            setSuccessMessage(null)
-          }, 4000)
+      .then((addedPerson) => {
+        setSuccessMessage(
+          `Added ${addedPerson.name}`
+        )
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 4000)
       })
       .catch((error) => {
-        console.log(error.response.data.error)
-          setErrorMessage(error.response.data.error)
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 5000)
-        })
+        console.log("Error in create person object, in addInfo")
+        setErrorMessage(error.response.data.error)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
     } 
   }
 
@@ -111,8 +108,8 @@ const App = () => {
         setPersons(newPersonList)
       })
       .catch((error) => {
-          setErrorMessage(
           console.log('delete failed:', error)
+          setErrorMessage(
           `Information of '${personToDelete.name}' has already been removed from server`
           )
           setTimeout(() => {

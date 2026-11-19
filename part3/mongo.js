@@ -29,17 +29,17 @@ const name = process.argv[3]
 const phoneNumber = process.argv[4]
 
 if (name && phoneNumber) {
-    const person = new Person({
+  const person = new Person({
     name: name,
     phoneNumber: phoneNumber,
-    })
-    person.save().then(result => {
+  })
+  person.save().then(() => {
     console.log(`added ${name} number ${phoneNumber} to phonebook`)
     mongoose.connection.close()
-    })
+  })
 } else {
-    Person.find({}).then(result => {
+  Person.find({}).then(result => {
     result.map(p => console.log(`${p.name} ${p.phoneNumber}`))
     mongoose.connection.close()
-    })
+  })
 }

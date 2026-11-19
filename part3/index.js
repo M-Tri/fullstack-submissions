@@ -4,30 +4,30 @@ const Person = require('./models/person')
 const express = require('express')
 const cors = require('cors')
 var morgan = require('morgan')
-morgan.token('body', function (req, res) {
-  return JSON.stringify(req.body);
+morgan.token('body', function (req) {
+  return JSON.stringify(req.body)
 })
 
 const app = express()
 app.use(cors())
 app.use(express.json())
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(express.static('dist'))
 
 
 app.get('/api/persons', (request, response) => {
-    Person.find({}).then(persons => {
-      response.json(persons)
-    })
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
 })
 
 app.get('/api/info', (request, response) => {
-    Person.countDocuments({}).then(personsCount => {
-      const date = Date()
-      const info =    `<div>Phonebook has info for ${personsCount} people</div>
+  Person.countDocuments({}).then(personsCount => {
+    const date = Date()
+    const info =    `<div>Phonebook has info for ${personsCount} people</div>
                       <div>${date}</div>`
-      response.send(info)
-    })
+    response.send(info)
+  })
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -39,12 +39,12 @@ app.get('/api/persons/:id', (request, response, next) => {
       response.status(404).end()
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -52,10 +52,10 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
-  
+
   if (!body) {
-    return response.status(400).json({ 
-      error: 'body undefined' 
+    return response.status(400).json({
+      error: 'body undefined'
     })
   }
 
@@ -67,7 +67,7 @@ app.post('/api/persons', (request, response, next) => {
   person.save().then(savedPerson => {
     response.json(savedPerson)
   })
-  .catch((error) => next(error))
+    .catch((error) => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -76,7 +76,7 @@ app.put('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
     .then((person) => {
       if (!person) {
-        console.log("Person was not found")
+        console.log('Person was not found')
         return response.status(404).end()
       }
 
@@ -112,5 +112,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })
